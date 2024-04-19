@@ -1,0 +1,24 @@
+ - name: delete all file
+   file: 
+    path: /applications/text-utils.com/public_html
+    state: absent
+
+ - name: push new build
+   synchronize:
+    src: /var/lib/jenkins/workspace/text-utils.com/build/
+    dest: /applications/text-utils/public_html/
+    recursive: yes
+
+ - name: Setting Ownership
+   file: path=/applications/text-utils.com/public_html/ owner=faizan group=www-data recurse=yes
+
+ - name: Setting Permission of Directories 0755
+   command: find /applications/text-utils.com/public_html/ -type d ! -perm 0755 -exec chmod 0755 {} \;
+
+ - name: Setting Permissions files 0664
+   command: find /applications/text-utils.com/public_html/ -type f ! -perm 0664 -exec chmod 0664 {} \;
+
+ - name: Restarting Nginx Service
+   action: service name={{item}} state=restarted
+   with_items:
+    - nginx

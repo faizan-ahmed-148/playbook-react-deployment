@@ -1,0 +1,7 @@
+ddways: "domain.com"
+client_ip: "127.0.0.1"
+aws_region: "us-east-2"
+
+#CLoud Watch
+LOG_FILE_PATH: /var/log/syslog
+LOG_GROUP_NAME: mygroup
